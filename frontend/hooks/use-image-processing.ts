@@ -1,57 +1,62 @@
 // NOTE: This file was partially generated using AI assistance.
-import { useState } from 'react'
-import { ProcessingSettings } from '@/components/image-processing-settings'
-import { processImageApiV1ProcessImagePost } from '@/lib/api/sdk.gen'
+import { useState } from 'react';
+import { api } from '@/lib/api/config';
+import { useToast } from '@/components/ui/use-toast';
 
-interface ProcessedImage {
-  id: string
-  url: string
+interface UseImageProcessingOptions {
+  aspectRatio?: string;
+  zoom?: string;
 }
 
-export function useImageProcessing() {
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+export function useImageProcessing(options: UseImageProcessingOptions = {}) {
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { toast } = useToast();
 
-  const processImage = async (file: File, settings: ProcessingSettings): Promise<ProcessedImage> => {
-    setIsProcessing(true)
-    setError(null)
-
+  const processImage = async (file: File) => {
     try {
-      // Create form data
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('aspect_ratio', settings.aspectRatio)
-      formData.append('zoom', settings.zoom.toString())
+      setIsProcessing(true);
+      const response = await api.processImageApiV1ProcessImagePost(
+        file,
+        options.aspectRatio,
+        options.zoom,
+        {
+          responseType: 'blob', // Tell axios to handle the response as a blob
+        }
+      );
 
-      // Use the generated client to make the request
-      const result = await processImageApiV1ProcessImagePost({
-        body: {
-          file,
-          aspect_ratio: settings.aspectRatio,
-          zoom: settings.zoom.toString()
-        },
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
-
-      // Convert API response to ProcessedImage format
-      return {
-        id: result.id || crypto.randomUUID(),
-        url: result.url
+      // The response.data is already a blob since we specified responseType: 'blob'
+      return response.data;
+    } catch (error: any) {
+      console.error('Error processing image:', error);
+      
+      // More detailed error message based on the error type
+      let errorMessage = 'There was a problem processing your image. Please try again.';
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        if (error.response.status === 422) {
+          errorMessage = 'Invalid image format or parameters. Please check your input.';
+        } else if (error.response.status === 413) {
+          errorMessage = 'Image file is too large. Please try a smaller image.';
+        }
+      } else if (error.request) {
+        // The request was made but no response was received
+        errorMessage = 'Could not reach the server. Please check your internet connection.';
       }
-    } catch (err) {
-      const message = err instanceof Error ? err.message : 'Failed to process image'
-      setError(message)
-      throw err
+
+      toast({
+        title: 'Error processing image',
+        description: errorMessage,
+        variant: 'destructive',
+      });
+      throw error;
     } finally {
-      setIsProcessing(false)
+      setIsProcessing(false);
     }
-  }
+  };
 
   return {
     processImage,
     isProcessing,
-    error
-  }
-} 
+  };
+}

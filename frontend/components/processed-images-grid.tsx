@@ -5,17 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Download } from "lucide-react"
 import Image from "next/image"
 
-interface ProcessedImage {
-  id: string
-  url: string
-}
 
-interface ProcessedImagesGridProps {
-  images?: ProcessedImage[]
-}
-
-export function ProcessedImagesGrid({ images = [] }: ProcessedImagesGridProps) {
-  const handleDownload = async (image: ProcessedImage) => {
+export function ProcessedImagesGrid({ images = [] }: { images: any[] }) {
+  const handleDownload = async (image: any) => {
     try {
       const response = await fetch(image.url)
       const blob = await response.blob()
@@ -41,11 +33,16 @@ export function ProcessedImagesGrid({ images = [] }: ProcessedImagesGridProps) {
       </div>
     )
   }
+  // convert images coming in as blobs to urls
+  const imagesProcessed = images.map((image) => ({
+    url: URL.createObjectURL(image),
+    id: crypto.randomUUID()
+  }))
 
   return (
     <ScrollArea className="h-[calc(100vh-8rem)] w-full rounded-md border">
       <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4">
-        {images.map((image) => (
+        {imagesProcessed.map((image) => (
           <div
             key={image.id}
             className="group relative aspect-square overflow-hidden rounded-lg border bg-muted"

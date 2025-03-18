@@ -4,15 +4,28 @@ name = "face-detection-cropping-backend"
 version = "0.1.0"
 description = "Face detection and cropping API service"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 dependencies = [
-    "fastapi==0.109.2",
-    "uvicorn[standard]==0.27.1",
-    "python-multipart==0.0.9",
+    "fastapi",
+    "uvicorn",
+    "python-multipart",
     "opencv-python>=4.11.0.86",
-    "pillow==8.2.0",
-    "aiofiles==23.2.1",
-    "python-jose[cryptography]==3.3.0",
-    "pydantic==2.6.1",
-    "pydantic-settings==2.1.0",
+    "pillow",
+    "aiofiles",
+    "python-jose[cryptography]",
+    "pydantic",
+    "pydantic-settings"
 ]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-asyncio",
+    "httpx",
+]
+
+[tool.pytest.ini_options]
+addopts = "-v -s"
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = ["."]

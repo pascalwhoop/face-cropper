@@ -1,7 +1,10 @@
+# NOTE: This file was partially generated using AI assistance.
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+
+from .api.routes import router
 
 app = FastAPI(
     title="Face Detection and Cropping API",
@@ -17,6 +20,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include routers
+app.include_router(router, prefix="/api/v1")
 
 
 # Health check endpoint

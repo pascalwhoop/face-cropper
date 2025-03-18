@@ -1,0 +1,13 @@
+pyproject.toml
+app/main.py
+app/api/__init__.py
+app/api/routes.py
+app/core/__init__.py
+app/core/image_processor.py
+app/utils/__init__.py
+face_detection_cropping_backend.egg-info/PKG-INFO
+face_detection_cropping_backend.egg-info/SOURCES.txt
+face_detection_cropping_backend.egg-info/dependency_links.txt
+face_detection_cropping_backend.egg-info/requires.txt
+face_detection_cropping_backend.egg-info/top_level.txt
+tests/test_api.py

@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+- do not use hatchling for building 
+- when using a library, regularly consider searching the web for the usage of the library first before implementing code to ensure you have the API of the library right. 
+- use uv for python packaging and dependency management. 
+- always update the [todo.txt](mdc:todo.txt) if you did some material work
+- always run `make test` when updating code or tests to ensure everything still works as expected. 

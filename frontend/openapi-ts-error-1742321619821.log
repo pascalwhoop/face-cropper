@@ -1,0 +1,12 @@
+🚫 client needs to be set to generate SDKs - which HTTP client do you want to use?
+Error: 🚫 client needs to be set to generate SDKs - which HTTP client do you want to use?
+    at Object.pluginByTag (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:59218)
+    at Object._infer (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:5665)
+    at i (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:59297)
+    at ed (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:59390)
+    at rd (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:60008)
+    at /Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:61279
+    at Array.map (<anonymous>)
+    at nc (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:15:60567)
+    at async aj (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/dist/index.cjs:1311:4415)
+    at async start (/Users/pascalwhoop/Code/play/face-detection-cropping/frontend/node_modules/@hey-api/openapi-ts/bin/index.cjs:124:21)

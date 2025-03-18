@@ -1,0 +1,11 @@
+---
+description: 
+globs: frontend/**
+alwaysApply: false
+---
+
+# Your rule content
+
+- Use our shadcn libraries available in frontend/components for any UI development. Make sure to keep to ShadCN beset practices. 
+- do not use any other competing library that is solving the same problem as ShadCN unless explicitly instructed (e.g. no use of prime-react or similar)
+- use the sonner component rather than toasts

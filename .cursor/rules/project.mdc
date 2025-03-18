@@ -8,3 +8,4 @@ alwaysApply: true
 - use uv for python packaging and dependency management. 
 - always update the [todo.txt](mdc:todo.txt) if you did some material work
 - always run `make test` when updating code or tests to ensure everything still works as expected. 
+- whenever the user starts a new conversation with you, make sure you read [objective.md](mdc:objective.md) to get the bigger picture

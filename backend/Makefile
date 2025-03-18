@@ -1,4 +1,3 @@
-
 install:
 	uv sync --all-extras
 
@@ -13,3 +12,6 @@ serve:
 
 test: install
 	uv run pytest tests
+
+generate_spec:
+	uv run python -c "from app.main import app; import json; print(json.dumps(app.openapi()))" > ../frontend/lib/openapi.json

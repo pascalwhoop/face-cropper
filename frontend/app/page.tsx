@@ -1,6 +1,5 @@
 "use client"
 
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
 import { ImageProcessingSettings, ProcessingSettings } from "@/components/image-processing-settings"
 import { ImageUploadArea } from "@/components/image-upload-area"
 import { ImagePreview } from "@/components/image-preview"
@@ -144,49 +143,51 @@ export default function Home() {
 
   return (
     <main className="min-h-screen p-4">
-      <div>
-            <div className="mb-4 flex justify-end">
-              <Button
-                variant="outline"
-                onClick={handleDownloadAll}
-                disabled={processedImages.length === 0 || isProcessing || isDownloading}
-              >
-                {isDownloading ? (
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                ) : (
-                  <Download className="mr-2 h-4 w-4" />
-                )}
-                {isDownloading ? "Creating ZIP..." : "Download All"}
-              </Button>
+      <div className="container mx-auto">
+        <div className="mb-4 flex justify-end">
+          <Button
+            variant="outline"
+            onClick={handleDownloadAll}
+            disabled={processedImages.length === 0 || isProcessing || isDownloading}
+          >
+            {isDownloading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="mr-2 h-4 w-4" />
+            )}
+            {isDownloading ? "Creating ZIP..." : "Download All"}
+          </Button>
+        </div>
+
+        {/* Main content area with responsive layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          {/* Left column - Settings, Upload, and Preview */}
+          <div className="space-y-4">
+            <div className="bg-card rounded-lg p-4">
+              <ImageProcessingSettings
+                settings={settings}
+                onSettingsChange={handleSettingsChange}
+              />
             </div>
-      </div>
-      <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={50}>
-          <div className="h-full flex flex-col gap-4 p-4">
-            <ScrollArea className="flex-1">
-              <div className="space-y-8">
-                <ImageProcessingSettings
-                  settings={settings}
-                  onSettingsChange={handleSettingsChange}
-                />
-                <ImageUploadArea 
-                  onFilesSelected={handleFilesSelected}
-                  isProcessing={isProcessing}
-                />
-                <ImagePreview files={memoizedFiles} />
-              </div>
-            </ScrollArea>
+            
+            <div className="bg-card rounded-lg p-4">
+              <ImageUploadArea 
+                onFilesSelected={handleFilesSelected}
+                isProcessing={isProcessing}
+              />
+            </div>
+            
+            <div className="bg-card rounded-lg p-4">
+              <ImagePreview files={memoizedFiles} />
+            </div>
           </div>
-        </ResizablePanel>
-        
-        <ResizableHandle />
-        
-        <ResizablePanel defaultSize={50}>
-          <div className="h-full p-4">
+
+          {/* Right column - Processed Images */}
+          <div className="bg-card rounded-lg p-4">
             <ProcessedImagesGrid images={processedImages} />
           </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+        </div>
+      </div>
     </main>
   )
 }

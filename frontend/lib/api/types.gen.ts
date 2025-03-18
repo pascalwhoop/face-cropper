@@ -54,5 +54,5 @@ export type HealthCheckHealthGetResponses = {
 };
 
 export type ClientOptions = {
-    baseUrl: `${string}://${string}` | (string & {});
+    baseURL: `${string}://${string}` | (string & {});
 };

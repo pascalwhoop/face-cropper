@@ -1,1 +1,133 @@
-{"openapi": "3.1.0", "info": {"title": "Face Detection and Cropping API", "description": "API for detecting faces in images and cropping them appropriately", "version": "1.0.0"}, "paths": {"/api/v1/process-image": {"post": {"summary": "Process Image", "description": "Process an uploaded image to detect and crop faces.\n\nArgs:\n    file (UploadFile): The image file to process\n    aspect_ratio (str): Desired aspect ratio for the output image\n    zoom (str): Zoom level (0.0 means maximum padding, 1.0 means tight crop)\n\nReturns:\n    StreamingResponse: The processed image\n\nRaises:\n    HTTPException: If the file is invalid or processing fails", "operationId": "process_image_api_v1_process_image_post", "requestBody": {"content": {"multipart/form-data": {"schema": {"$ref": "#/components/schemas/Body_process_image_api_v1_process_image_post"}}}}, "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}, "422": {"description": "Validation Error", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/HTTPValidationError"}}}}}}}, "/health": {"get": {"summary": "Health Check", "operationId": "health_check_health_get", "responses": {"200": {"description": "Successful Response", "content": {"application/json": {"schema": {}}}}}}}}, "components": {"schemas": {"Body_process_image_api_v1_process_image_post": {"properties": {"file": {"type": "string", "format": "binary", "title": "File"}, "aspect_ratio": {"type": "string", "title": "Aspect Ratio", "default": "original"}, "zoom": {"type": "string", "title": "Zoom", "default": "0.2"}}, "type": "object", "title": "Body_process_image_api_v1_process_image_post"}, "HTTPValidationError": {"properties": {"detail": {"items": {"$ref": "#/components/schemas/ValidationError"}, "type": "array", "title": "Detail"}}, "type": "object", "title": "HTTPValidationError"}, "ValidationError": {"properties": {"loc": {"items": {"anyOf": [{"type": "string"}, {"type": "integer"}]}, "type": "array", "title": "Location"}, "msg": {"type": "string", "title": "Message"}, "type": {"type": "string", "title": "Error Type"}}, "type": "object", "required": ["loc", "msg", "type"], "title": "ValidationError"}}}}
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Face Detection and Cropping API",
+        "description": "API for detecting faces in images and cropping them appropriately",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/process-image": {
+            "post": {
+                "summary": "Process Image",
+                "description": "Process an uploaded image to detect and crop faces.\n\nArgs:\n    file (UploadFile): The image file to process\n    aspect_ratio (str): Desired aspect ratio for the output image\n    zoom (str): Zoom level (0.0 means maximum padding, 1.0 means tight crop)\n\nReturns:\n    StreamingResponse: The processed image\n\nRaises:\n    HTTPException: If the file is invalid or processing fails",
+                "operationId": "process_image_api_v1_process_image_post",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_process_image_api_v1_process_image_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "summary": "Health Check",
+                "operationId": "health_check_health_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Body_process_image_api_v1_process_image_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    },
+                    "aspect_ratio": {
+                        "type": "string",
+                        "title": "Aspect Ratio",
+                        "default": "original"
+                    },
+                    "zoom": {
+                        "type": "string",
+                        "title": "Zoom",
+                        "default": "0.2"
+                    }
+                },
+                "type": "object",
+                "title": "Body_process_image_api_v1_process_image_post"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}

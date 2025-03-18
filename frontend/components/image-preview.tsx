@@ -3,12 +3,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import Image from "next/image"
+import { useEffect, useRef, memo } from "react"
 
 interface ImagePreviewProps {
   files?: File[]
 }
 
-export function ImagePreview({ files = [] }: ImagePreviewProps) {
+export const ImagePreview = memo(function ImagePreview({ files = [] }: ImagePreviewProps) {
+  const urlsRef = useRef<Set<string>>(new Set())
+
+  useEffect(() => {
+    return () => {
+      // Cleanup URLs when component unmounts
+      urlsRef.current.forEach(url => {
+        URL.revokeObjectURL(url)
+      })
+    }
+  }, [])
+
   if (files.length === 0) {
     return null
   }
@@ -21,20 +33,31 @@ export function ImagePreview({ files = [] }: ImagePreviewProps) {
       <CardContent>
         <ScrollArea className="h-[300px] w-full rounded-md border p-4">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {files.map((file, index) => (
-              <div key={index} className="relative aspect-square overflow-hidden rounded-lg border bg-muted">
-                <Image
-                  src={URL.createObjectURL(file)}
-                  alt={`Preview ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  onLoad={(e) => URL.revokeObjectURL(e.currentTarget.src)}
-                />
-              </div>
-            ))}
+            {files.map((file) => {
+              const objectUrl = URL.createObjectURL(file)
+              urlsRef.current.add(objectUrl)
+              
+              return (
+                <div 
+                  key={`${file.name}-${file.lastModified}`} 
+                  className="relative aspect-square overflow-hidden rounded-lg border bg-muted"
+                >
+                  <Image
+                    src={objectUrl}
+                    alt={file.name}
+                    fill
+                    className="object-cover"
+                    onLoad={() => {
+                      URL.revokeObjectURL(objectUrl)
+                      urlsRef.current.delete(objectUrl)
+                    }}
+                  />
+                </div>
+              )
+            })}
           </div>
         </ScrollArea>
       </CardContent>
     </Card>
   )
-} 
+}) 

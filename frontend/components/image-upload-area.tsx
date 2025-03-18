@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Upload, Loader2 } from "lucide-react"
 import { useCallback } from "react"
 import { useDropzone } from "react-dropzone"
@@ -25,6 +25,9 @@ export function ImageUploadArea({ onFilesSelected, isProcessing = false }: Image
 
   return (
     <Card>
+      <CardHeader>
+        <CardTitle>Upload Images</CardTitle>
+      </CardHeader>
       <CardContent className="pt-6">
         <div
           {...getRootProps()}

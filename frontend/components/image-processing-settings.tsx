@@ -32,10 +32,10 @@ export function ImageProcessingSettings({ settings, onSettingsChange }: ImagePro
               <SelectValue placeholder="Select aspect ratio" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="1:1">Square (1:1)</SelectItem>
-              <SelectItem value="4:3">Standard (4:3)</SelectItem>
-              <SelectItem value="16:9">Widescreen (16:9)</SelectItem>
-              <SelectItem value="3:4">Portrait (3:4)</SelectItem>
+              <SelectItem value="original">Original</SelectItem>
+              <SelectItem value="square">Square (1:1)</SelectItem>
+              <SelectItem value="2:3">Standard (2:3)</SelectItem>
+              <SelectItem value="9:16">Portrait (9:16)</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -44,8 +44,8 @@ export function ImageProcessingSettings({ settings, onSettingsChange }: ImagePro
           <Label htmlFor="zoom">Zoom Level: {settings.zoom.toFixed(1)}x</Label>
           <Slider
             id="zoom"
-            min={1}
-            max={2}
+            min={0}
+            max={1}
             step={0.1}
             value={[settings.zoom]}
             onValueChange={([value]) => onSettingsChange({ ...settings, zoom: value })}

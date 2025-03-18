@@ -1,7 +1,7 @@
 // NOTE: This file was partially generated using AI assistance.
 import { useState } from 'react';
 import { api } from '@/lib/api/config';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 
 interface UseImageProcessingOptions {
   aspectRatio?: string;
@@ -10,7 +10,6 @@ interface UseImageProcessingOptions {
 
 export function useImageProcessing(options: UseImageProcessingOptions = {}) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const { toast } = useToast();
 
   const processImage = async (file: File) => {
     try {
@@ -44,11 +43,7 @@ export function useImageProcessing(options: UseImageProcessingOptions = {}) {
         errorMessage = 'Could not reach the server. Please check your internet connection.';
       }
 
-      toast({
-        title: 'Error processing image',
-        description: errorMessage,
-        variant: 'destructive',
-      });
+      toast.error(errorMessage);
       throw error;
     } finally {
       setIsProcessing(false);

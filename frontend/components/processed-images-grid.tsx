@@ -34,15 +34,15 @@ export function ProcessedImagesGrid({ images = [] }: { images: any[] }) {
     )
   }
   // convert images coming in as blobs to urls
-  const imagesProcessed = images.map((image) => ({
-    url: URL.createObjectURL(image),
-    id: crypto.randomUUID()
-  }))
+  // const imagesProcessed = images.map((image) => ({
+  //   url: URL.createObjectURL(image),
+  //   id: crypto.randomUUID()
+  // }))
 
   return (
     <ScrollArea className="h-[calc(100vh-8rem)] w-full rounded-md border">
       <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4">
-        {imagesProcessed.map((image) => (
+        {images.map((image) => (
           <div
             key={image.id}
             className="group relative aspect-square overflow-hidden rounded-lg border bg-muted"

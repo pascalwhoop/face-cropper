@@ -20,7 +20,7 @@ export function ImagePreview({ files = [] }: ImagePreviewProps) {
       </CardHeader>
       <CardContent>
         <ScrollArea className="h-[300px] w-full rounded-md border p-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
             {files.map((file, index) => (
               <div key={index} className="relative aspect-square overflow-hidden rounded-lg border bg-muted">
                 <Image

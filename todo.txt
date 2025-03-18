@@ -1,0 +1,34 @@
+# Project Transformation Work Plan
+# NOTE: This file was partially generated using AI assistance.
+
+## Phase 1: Project Structure and Backend Migration
+- [x] Create backend directory and move existing Python code
+- [x] Update backend dependencies (migrated to pyproject.toml with UV)
+- [x] Create FastAPI application structure
+- [x] Implement image processing endpoint with async support
+- [x] Add Docker configuration for backend with UV support
+- [ ] Test backend API independently
+
+## Phase 2: Frontend Setup
+- [ ] Set up Next.js 14 project with TypeScript
+- [ ] Install and configure ShadCN/UI
+- [ ] Create basic project structure (pages, components, etc.)
+- [ ] Set up API client utilities
+
+## Phase 3: Frontend Implementation
+- [ ] Create main layout with split view (upload/results)
+- [ ] Implement drag-and-drop upload zone
+- [ ] Add upload progress indicators
+- [ ] Implement image preview grid
+- [ ] Add download functionality with progress
+- [ ] Implement error handling and user feedback
+- [ ] Add loading states and animations
+
+## Phase 4: Integration and Testing
+- [ ] Test end-to-end flow with multiple images
+- [ ] Optimize performance and UX
+- [ ] Add final polish and documentation
+- [ ] Test cross-browser compatibility
+
+## Current Focus:
+→ Testing backend API independently 

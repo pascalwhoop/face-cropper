@@ -2,7 +2,7 @@
 
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
-import { Download } from "lucide-react"
+import { Download, Loader2 } from "lucide-react"
 import Image from "next/image"
 import { memo } from "react"
 
@@ -14,6 +14,9 @@ interface ProcessedImage {
 
 interface ProcessedImagesGridProps {
   images: ProcessedImage[]
+  onDownloadAll: () => void
+  isDownloading: boolean
+  isProcessing: boolean
 }
 
 const ProcessedImageItem = memo(function ProcessedImageItem({ image, onDownload }: { 
@@ -44,7 +47,7 @@ const ProcessedImageItem = memo(function ProcessedImageItem({ image, onDownload 
   )
 })
 
-export function ProcessedImagesGrid({ images }: ProcessedImagesGridProps) {
+export function ProcessedImagesGrid({ images, onDownloadAll, isDownloading, isProcessing }: ProcessedImagesGridProps) {
   const handleDownload = async (image: ProcessedImage) => {
     try {
       const response = await fetch(image.url)
@@ -64,25 +67,50 @@ export function ProcessedImagesGrid({ images }: ProcessedImagesGridProps) {
 
   if (images.length === 0) {
     return (
-      <div className="flex h-[300px] items-center justify-center rounded-lg border border-dashed">
-        <p className="text-sm text-muted-foreground">
-          Processed images will appear here
-        </p>
+      <div className="flex flex-col space-y-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Processed Images</h2>
+        </div>
+        <div className="flex h-[300px] items-center justify-center rounded-lg border border-dashed">
+          <p className="text-sm text-muted-foreground">
+            Processed images will appear here
+          </p>
+        </div>
       </div>
     )
   }
 
   return (
-    <ScrollArea className="h-[calc(100vh-8rem)] w-full rounded-md border">
-      <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4">
-        {images.map((image) => (
-          <ProcessedImageItem
-            key={image.id}
-            image={image}
-            onDownload={handleDownload}
-          />
-        ))}
+    <div className="flex flex-col space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-semibold">Processed Images</h2>
+          <p className="text-sm text-muted-foreground">{images.length} images processed</p>
+        </div>
+        <Button
+          variant="outline"
+          onClick={onDownloadAll}
+          disabled={images.length === 0 || isProcessing || isDownloading}
+        >
+          {isDownloading ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Download className="mr-2 h-4 w-4" />
+          )}
+          {isDownloading ? "Creating ZIP..." : "Download All"}
+        </Button>
       </div>
-    </ScrollArea>
+      <ScrollArea className="h-[calc(100vh-12rem)] w-full rounded-md border">
+        <div className="grid grid-cols-2 gap-4 p-4 md:grid-cols-3 lg:grid-cols-4">
+          {images.map((image) => (
+            <ProcessedImageItem
+              key={image.id}
+              image={image}
+              onDownload={handleDownload}
+            />
+          ))}
+        </div>
+      </ScrollArea>
+    </div>
   )
 } 

@@ -5,11 +5,12 @@ import { ImageUploadArea } from "@/components/image-upload-area"
 import { ImagePreview } from "@/components/image-preview"
 import { ProcessedImagesGrid } from "@/components/processed-images-grid"
 import { Button } from "@/components/ui/button"
-import { Download, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useState, useCallback, useRef, useEffect, useMemo } from "react"
 import { useImageProcessing } from "@/hooks/use-image-processing"
 import { toast } from "sonner"
+import { NavBar } from "@/components/nav-bar"
 import JSZip from 'jszip'
 
 interface ProcessedImage {
@@ -142,52 +143,45 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen p-4">
-      <div className="container mx-auto">
-        <div className="mb-4 flex justify-end">
-          <Button
-            variant="outline"
-            onClick={handleDownloadAll}
-            disabled={processedImages.length === 0 || isProcessing || isDownloading}
-          >
-            {isDownloading ? (
-              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-            ) : (
-              <Download className="mr-2 h-4 w-4" />
-            )}
-            {isDownloading ? "Creating ZIP..." : "Download All"}
-          </Button>
-        </div>
-
-        {/* Main content area with responsive layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-          {/* Left column - Settings, Upload, and Preview */}
-          <div className="space-y-4">
-            <div className="bg-card rounded-lg p-4">
-              <ImageProcessingSettings
-                settings={settings}
-                onSettingsChange={handleSettingsChange}
-              />
+    <div className="min-h-screen flex flex-col">
+      <NavBar />
+      <main className="flex-1 p-4">
+        <div className="container mx-auto">
+          {/* Main content area with responsive layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {/* Left column - Settings, Upload, and Preview */}
+            <div className="space-y-4">
+              <div className="bg-card rounded-lg p-4">
+                <ImageProcessingSettings
+                  settings={settings}
+                  onSettingsChange={handleSettingsChange}
+                />
+              </div>
+              
+              <div className="bg-card rounded-lg p-4">
+                <ImageUploadArea 
+                  onFilesSelected={handleFilesSelected}
+                  isProcessing={isProcessing}
+                />
+              </div>
+              
+              <div className="bg-card rounded-lg p-4">
+                <ImagePreview files={memoizedFiles} />
+              </div>
             </div>
-            
+
+            {/* Right column - Processed Images */}
             <div className="bg-card rounded-lg p-4">
-              <ImageUploadArea 
-                onFilesSelected={handleFilesSelected}
+              <ProcessedImagesGrid 
+                images={processedImages}
+                onDownloadAll={handleDownloadAll}
+                isDownloading={isDownloading}
                 isProcessing={isProcessing}
               />
             </div>
-            
-            <div className="bg-card rounded-lg p-4">
-              <ImagePreview files={memoizedFiles} />
-            </div>
-          </div>
-
-          {/* Right column - Processed Images */}
-          <div className="bg-card rounded-lg p-4">
-            <ProcessedImagesGrid images={processedImages} />
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   )
 }

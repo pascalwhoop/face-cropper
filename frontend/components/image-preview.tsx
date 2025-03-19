@@ -21,17 +21,24 @@ export const ImagePreview = memo(function ImagePreview({ files = [] }: ImagePrev
     }
   }, [])
 
-  if (files.length === 0) {
-    return null
-  }
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>Original Images</CardTitle>
       </CardHeader>
-      <CardContent>
-        <ScrollArea className="h-[300px] w-full rounded-md border p-4">
+      {files.length === 0 && (
+        <CardContent>
+          <div className="flex h-[300px] items-center justify-center rounded-lg border border-dashed">
+            <p className="text-sm text-muted-foreground">
+              Image previews will appear here
+            </p>
+          </div>
+        </CardContent>
+      )}
+
+      {files.length > 0 && (
+        <CardContent>
+          <ScrollArea className="h-[300px] w-full rounded-md border p-4">
           <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
             {files.map((file) => {
               const objectUrl = URL.createObjectURL(file)
@@ -58,6 +65,7 @@ export const ImagePreview = memo(function ImagePreview({ files = [] }: ImagePrev
           </div>
         </ScrollArea>
       </CardContent>
+      )}
     </Card>
   )
 }) 

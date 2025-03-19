@@ -17,8 +17,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
-        "https://face-cropper.vercel.app",
-    ],  # Frontend URL
+        "https://face-cropper.vercel.app",  # Frontend URL TODO change to better domain
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

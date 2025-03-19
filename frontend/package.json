@@ -9,6 +9,11 @@
     "lint": "next lint",
     "generate-client": "openapi-generator-cli generate -i lib/openapi.json -g typescript-axios -o lib/api"
   },
+  "optionalDependencies": {
+  "@tailwindcss/oxide-linux-arm64-gnu": "^4.0.1",
+  "lightningcss-linux-x64-gnu": "^1.29.1"
+  },
+
   "dependencies": {
     "@hey-api/client-axios": "^0.6.2",
     "@hookform/resolvers": "^4.1.3",

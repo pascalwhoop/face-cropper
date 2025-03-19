@@ -13,9 +13,10 @@ export const ImagePreview = memo(function ImagePreview({ files = [] }: ImagePrev
   const urlsRef = useRef<Set<string>>(new Set())
 
   useEffect(() => {
+    const currentUrls = urlsRef.current
     return () => {
       // Cleanup URLs when component unmounts
-      urlsRef.current.forEach(url => {
+      currentUrls.forEach(url => {
         URL.revokeObjectURL(url)
       })
     }

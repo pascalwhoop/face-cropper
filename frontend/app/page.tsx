@@ -4,9 +4,6 @@ import { ImageProcessingSettings, ProcessingSettings } from "@/components/image-
 import { ImageUploadArea } from "@/components/image-upload-area"
 import { ImagePreview } from "@/components/image-preview"
 import { ProcessedImagesGrid } from "@/components/processed-images-grid"
-import { Button } from "@/components/ui/button"
-import { Loader2 } from "lucide-react"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { useState, useCallback, useRef, useEffect, useMemo } from "react"
 import { useImageProcessing } from "@/hooks/use-image-processing"
 import { toast } from "sonner"
@@ -39,8 +36,9 @@ export default function Home() {
 
   // Cleanup object URLs when component unmounts
   useEffect(() => {
+    const currentUrls = processedUrlsRef.current
     return () => {
-      processedUrlsRef.current.forEach(url => {
+      currentUrls.forEach(url => {
         URL.revokeObjectURL(url)
       })
     }
@@ -80,6 +78,7 @@ export default function Home() {
       }
     } catch (err) {
       toast.error("Failed to process images")
+      console.error('Failed to process images:', err)
     }
   }, [processImage])
 

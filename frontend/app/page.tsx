@@ -7,6 +7,8 @@ import { ProcessedImagesGrid } from "@/components/processed-images-grid"
 import { useState, useCallback, useRef, useEffect, useMemo } from "react"
 import { useImageProcessing } from "@/hooks/use-image-processing"
 import { toast } from "sonner"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { NavBar } from "@/components/nav-bar"
 import JSZip from 'jszip'
 
@@ -143,6 +145,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <Analytics />
+      <SpeedInsights />
       <NavBar />
       <main className="flex-1 p-4">
         <div className="container mx-auto">

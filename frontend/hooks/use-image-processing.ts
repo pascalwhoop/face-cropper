@@ -1,6 +1,6 @@
 // NOTE: This file was partially generated using AI assistance.
 import { useState } from 'react';
-import { api } from '@/lib/api/config';
+import { api } from '@/lib/api/client';
 import { toast } from 'sonner';
 
 interface UseImageProcessingOptions {

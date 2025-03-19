@@ -42,3 +42,4 @@ next-env.d.ts
 
 **/*.log
 lib/api/
+!lib/api/client.ts
